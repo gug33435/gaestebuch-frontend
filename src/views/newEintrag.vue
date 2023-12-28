@@ -1,7 +1,9 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <main>
+    <div>
+      <Form></Form>
+    </div>
+  </main>
 </template>
 
 <style>
@@ -13,3 +15,6 @@
   }
 }
 </style>
+<script setup>
+import Form from "../components/Form.vue";
+</script>

@@ -5,11 +5,24 @@ defineProps({
     required: true
   }
 })
+
+let test = "haha"
+async function initialise() {
+  fetch("localhost:8080/eintrag/all")
+      .then(response => {
+        return response.json()
+      })
+      .then(data => {
+        test = JSON.stringify(data)
+      })
+}
+
+initialise();
 </script>
 
 <template>
   <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
+    <h1 class="green">msg</h1>
     <h3>
       Hello World!
     </h3>
