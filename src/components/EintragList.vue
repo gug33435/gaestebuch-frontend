@@ -1,26 +1,52 @@
 <script setup>
-import {ref} from "vue";
-import { useRoute } from 'vue-router';
+import {useRoute} from 'vue-router';
+import {onMounted, ref} from "vue";
+import router from "@/router";
 const route = useRoute()
-console.log(route.path)
-let test = ref(await ausführen())
-for (let valueKey in test.value) {
-  test.value[valueKey].publishDate = (new Date(test.value[valueKey].publishDate)).toLocaleDateString()
+let test = ref({})
+
+
+function transfer(id) {
+  router.push('/editEintrag/' + id)
 }
 
-async function ausführen() {
-  try {
-    const response = await fetch('http://localhost:8080/eintrag/all')
-    const save = await response.json()
-    return save.reverse().filter(function(item) {
-      return item.restID === parseInt(route.path.replace("/rest", ""))
-    })
-  } catch (error) {
-    console.error(error)
+function transfer2() {
+  router.push('/newEintrag/' + route.name)
+}
+
+onMounted(() => {
+  loadUpdate()
+  console.log("mounted")
+})
+
+function loadUpdate() {
+  const reqeustOptions = {
+    method: 'GET'
   }
+  const endpoint = 'http://localhost:8080/eintrag/all'
+  fetch(endpoint, reqeustOptions)
+      .then(response => response.json())
+      .then(result => {
+        const final = result.filter(function(item) {
+          return item.restID === parseInt(route.path.replace("/rest", ""))
+        })
+        test.value = final.sort(function(a, b) {
+          return b.publishDate - a.publishDate
+        })
+        for (let valueKey in test.value) {
+          test.value[valueKey].publishDate = (new Date(test.value[valueKey].publishDate)).toLocaleDateString()
+        }
+        console.log("Update loaded")
+      })
 }
 
-console.log(JSON.stringify(test.value))
+async function pushtoBackend(id) {
+  await fetch("http://localhost:8080/eintrag/delete/" + id, { method: 'DELETE'})
+      .then (response => {
+        console.log(response)
+        loadUpdate()
+      })
+}
 </script>
 
 <template>
@@ -102,12 +128,22 @@ console.log(JSON.stringify(test.value))
         </div>
       </div>
       <p class="mb-1">{{item.text}}</p>
-      <small>{{item.publishDate}}</small>
+      <div class="d-flex w-100 justify-content-between">
+        <small class="my-auto">{{item.publishDate}}</small>
+        <button class="btn btn-danger my-auto" @click="pushtoBackend(item.id)">Löschen</button>
+        <button class="btn btn-outline-light my-auto" @click="transfer(item.id)">Bearbeiten</button>
+      </div>
     </a>
+  </div>
+  <div id="buttondiv" class="list-group">
+    <button @click="transfer2" class="">Neuer Eintrag</button>
   </div>
 </template>
 
 <style scoped>
+#buttondiv {
+  text-align: center;
+}
 .list-group {
   margin: 10px;
   flex-grow: 1;

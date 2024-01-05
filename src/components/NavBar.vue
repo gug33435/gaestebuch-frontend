@@ -1,10 +1,66 @@
 <script setup>
+import {onMounted, onUpdated, ref} from "vue";
+import { useRoute } from 'vue-router';
+import router from "@/router";
+const route = useRoute()
+
+let restLocation = ""
+let restText = ""
+let weatherData = ref({})
+let weatherDegree = ref("")
+let imageURL = ref("")
+
+onMounted(async () => {
+  await router.isReady()
+  console.log(route.path)
+  if (route.path === "/rest1" || route.path === "/rest2" || route.path === "/rest3") {
+    const num = parseInt(route.path.replace("/rest", ""))
+    console.log(num)
+    setRestLocation(num, false)
+  }
+})
+
+function loadWeather() {
+  const endpoint = "http://api.weatherapi.com/v1/current.json?key=3db80cd3a1704ef28a4121631232912&q=" + restLocation + "&aqi=no"
+  const requestOptions = {
+    method: 'GET'
+  }
+  fetch(endpoint, requestOptions)
+      .then(response => response.json())
+      .then (result => {
+        weatherData.value = result
+        weatherDegree.value = result.current["temp_c"] + "° Celsius"
+        imageURL.value = result.current.condition.icon
+      })
+}
+
+function setRestLocation(number, retransfer) {
+  if (number === 1) {
+    restLocation = "Berlin"
+    restText = "Braserie Gendarmenmarkt, " + restLocation
+    console.log(restLocation)
+    if (retransfer) router.push('/rest1')
+  } else if (number === 2) {
+      restLocation = "Frankfurt"
+      restText = "Imbiss Hoppner, " + restLocation
+      console.log(restLocation)
+      if (retransfer) this.router.push('/rest2')
+    } else if (number === 3) {
+      restLocation = "Reykjavík"
+      restText = "Hotel Atlantis, " + restLocation
+      console.log(restLocation)
+      if (retransfer) router.push('/rest3')
+    }
+    loadWeather()
+}
+
 async function login() {
   await this.$auth0.signInWithRedirect({ originalUri: '/'})
 }
 async function logout() {
   await this.$auth0.signOut()
 }
+
 </script>
 
 <template>
@@ -21,15 +77,18 @@ async function logout() {
               Restaurantauswahl
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/rest1">Restaurant 1</a></li>
-              <li><a class="dropdown-item" href="/rest2">Restaurant 2</a></li>
-              <li><a class="dropdown-item" href="/rest3">Restaurant 3</a></li>
+              <li><a class="dropdown-item" @click="setRestLocation(1, true)">Restaurant 1</a></li>
+              <li><a class="dropdown-item" @click="setRestLocation(2, true)">Restaurant 2</a></li>
+              <li><a class="dropdown-item" @click="setRestLocation(3, true)">Restaurant 3</a></li>
             </ul>
           </li>
         </ul>
       </div>
-      <button v-if="authState && authState.isAuthenticated" @click="logout">Logout</button>
-      <button v-else @click="login">Login</button>
+      <a class="navbar-text">{{restText}}</a>
+      <a class="navbar-text">{{weatherDegree}}</a>
+      <img v-bind:src="imageURL">
+      <button v-if="authState && authState.isAuthenticated" class="btn btn-outline-danger my-2 my-sm-0" type="submit" @click="logout">Logout</button>
+      <button v-else class="btn btn-outline-success my-2 my-sm-0" type="submit" @click="login">Login</button>
     </div>
   </nav>
 </template>
