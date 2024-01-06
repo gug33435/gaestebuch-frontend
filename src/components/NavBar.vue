@@ -21,7 +21,7 @@ onMounted(async () => {
 })
 
 function loadWeather() {
-  const endpoint = "http://api.weatherapi.com/v1/current.json?key=3db80cd3a1704ef28a4121631232912&q=" + restLocation + "&aqi=no"
+  const endpoint = "http://api.weatherapi.com/v1/current.json?key=97d241e2972a4bc684a05407240601&q=" + restLocation + "&aqi=no"
   const requestOptions = {
     method: 'GET'
   }
@@ -54,12 +54,12 @@ function setRestLocation(number, retransfer) {
     loadWeather()
 }
 
-async function login() {
+/* async function login() {
   await this.$auth0.signInWithRedirect({ originalUri: '/'})
 }
 async function logout() {
   await this.$auth0.signOut()
-}
+} */
 
 </script>
 

@@ -1,10 +1,19 @@
 <script setup>
 import {useRoute} from 'vue-router';
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import router from "@/router";
 const route = useRoute()
 let test = ref({})
 
+watch(
+    () => route.path,
+    async newId => {
+      loadUpdate()
+    },
+    {
+      immediate: true
+    }
+)
 
 function transfer(id) {
   router.push('/editEintrag/' + id)
