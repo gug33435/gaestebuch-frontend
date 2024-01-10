@@ -1,41 +1,14 @@
 # gaestebuch-frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+Die App ermöglicht es Nutzern, eine Rezension für bestimmte (3 Stück) Restaurants/Etablissments zu hinterlassen. 
+Dabei werden folgende Funktionalitäten geboten:
+- Gästebucheinträge anschauen
+- Eintrag hinzufügen
+- Eintrag bearbeiten
+- Eintrag löschen
+- Restaurant/Etablissment auswählen
+- Sternefunktion zur Bewertung der Lokalität
+- Einbindung einer Wetter-API, um Nutzern den Abruf der Wetterinformationen zum Standort zu ermöglichen
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+Der Nutzer kann, sobald er die Startseite erreicht hat, auf all diese Funktionen zugreifen. So gut wie alle Komponenten werden dabei
+dynamisch geladen und nicht mittels eines "Page Reloads."
