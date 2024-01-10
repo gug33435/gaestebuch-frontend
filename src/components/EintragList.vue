@@ -32,7 +32,7 @@ function loadUpdate() {
   const reqeustOptions = {
     method: 'GET'
   }
-  const endpoint = 'http://localhost:8080/eintrag/all'
+  const endpoint = 'https://gaestebuch-backend.onrender.com/eintrag/all'
   fetch(endpoint, reqeustOptions)
       .then(response => response.json())
       .then(result => {
@@ -50,7 +50,7 @@ function loadUpdate() {
 }
 
 async function pushtoBackend(id) {
-  await fetch("http://localhost:8080/eintrag/delete/" + id, { method: 'DELETE'})
+  await fetch("https://gaestebuch-backend.onrender.com/eintrag/delete/" + id, { method: 'DELETE'})
       .then (response => {
         console.log(response)
         loadUpdate()

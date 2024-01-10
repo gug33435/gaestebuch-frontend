@@ -1,6 +1,4 @@
-import {test, describe, expect, it} from "vitest";
-import { mount } from '@vue/test-utils'
-import NavBar from "@/components/NavBar.vue";
+import {test, expect} from "vitest";
 
 function sum(a, b) {
     return a+b

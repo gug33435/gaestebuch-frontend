@@ -7,7 +7,7 @@ console.log(route)
 
 const pushToBackEnd = async(fields) => {
   await new Promise((r) => setTimeout(r, 1000))
-  const endpoint = 'http://localhost:8080/eintrag'
+  const endpoint = 'https://gaestebuch-backend.onrender.com/eintrag'
   const data = {
     text: fields.beschreibung,
     visitRating: parseInt(fields.bewertung),

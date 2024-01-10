@@ -11,7 +11,7 @@ let dataForID = ref(await ausführen())
 
 async function ausführen() {
   try {
-    const response = await fetch('http://localhost:8080/eintrag/' + route.path.replace("/editEintrag/", ""))
+    const response = await fetch('https://gaestebuch-backend.onrender.com/eintrag/' + route.path.replace("/editEintrag/", ""))
     const save = await response.json()
     return save
   } catch (error) {
@@ -21,7 +21,7 @@ async function ausführen() {
 
 const pushToBackEnd = async(fields) => {
   await new Promise((r) => setTimeout(r, 1000))
-  const endpoint = 'http://localhost:8080/eintrag'
+  const endpoint = 'https://gaestebuch-backend.onrender.com/eintrag'
   const data = {
     id: route.path.replace("/editEintrag/", ""),
     text: fields.beschreibung,

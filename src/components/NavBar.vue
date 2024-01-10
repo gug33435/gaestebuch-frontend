@@ -1,8 +1,8 @@
 <script setup>
-import {onMounted, onUpdated, ref} from "vue";
+import {onMounted, ref} from "vue";
 import { useRoute } from 'vue-router';
 import router from "@/router";
-const route = useRoute()
+const route = useRoute() || { path: '/rest1' }
 
 let restLocation = ""
 let restText = ""
@@ -21,6 +21,7 @@ onMounted(async () => {
 })
 
 function loadWeather() {
+  console.log("API Entered")
   const endpoint = "http://api.weatherapi.com/v1/current.json?key=97d241e2972a4bc684a05407240601&q=" + restLocation + "&aqi=no"
   const requestOptions = {
     method: 'GET'
@@ -28,6 +29,7 @@ function loadWeather() {
   fetch(endpoint, requestOptions)
       .then(response => response.json())
       .then (result => {
+        console.log(result)
         weatherData.value = result
         weatherDegree.value = result.current["temp_c"] + "° Celsius"
         imageURL.value = result.current.condition.icon
@@ -35,6 +37,7 @@ function loadWeather() {
 }
 
 function setRestLocation(number, retransfer) {
+  console.log("entered")
   if (number === 1) {
     restLocation = "Berlin"
     restText = "Braserie Gendarmenmarkt, " + restLocation
@@ -53,14 +56,6 @@ function setRestLocation(number, retransfer) {
     }
     loadWeather()
 }
-
-/* async function login() {
-  await this.$auth0.signInWithRedirect({ originalUri: '/'})
-}
-async function logout() {
-  await this.$auth0.signOut()
-} */
-
 </script>
 
 <template>
