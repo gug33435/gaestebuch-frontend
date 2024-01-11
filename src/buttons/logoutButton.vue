@@ -1,6 +1,6 @@
 <script setup>
 import {useAuth0} from "@auth0/auth0-vue";
-const { logout, isAuthenticated} = useAuth0()
+const { logout, isAuthenticated} = useAuth0() || {}
 function logOutOfApp() {
   logout()
 }

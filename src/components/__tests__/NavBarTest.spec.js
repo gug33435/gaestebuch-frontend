@@ -2,16 +2,24 @@ import { mount } from '@vue/test-utils'
 import { describe, it, expect, vi } from 'vitest'
 import { createRouter, createWebHistory } from 'vue-router'
 import NavBar from '@/components/NavBar.vue'
+import { useAuth0 } from "@auth0/auth0-vue";
+import * as gloabl from "@auth0/auth0-vue";
+
+global.useAuth0 = {
+    isAuthenticated: true,
+    loginWithRedirect: vi.fn,
+    logout: vi.fn
+}
 
 global.fetch = async () => ({
     json: async () => ({current: {temp_c: 28, condition: {icon: 'cloudy'}}})
 })
 
-describe('YourComponent Tests', () => {
+describe('Navbar Tests', () => {
     it('should navigate to home on clicking home link', async () => {
         const router = createRouter({
             history: createWebHistory(),
-            routes: [{path: '/', component: NavBar}],
+            routes: [{path: '/', component: NavBar}]
         })
 
         const wrapper = mount(NavBar, {
@@ -27,12 +35,8 @@ describe('YourComponent Tests', () => {
         expect(router.currentRoute.value.path).toBe('/')
     })
 
-    /* it('should load correct weather data on selecting restaurant from dropdown', async () => {
-        useAuth0.mockReturnValue({
-            isAuthenticated: true,
-            loginWithRedirect: vi.fn(),
-            logout: vi.fn()
-        })
+    it('should load correct weather data on selecting restaurant from dropdown', async () => {
+        const mockedUseAuth0 = gloabl.useAuth0
 
         const router = createRouter({
             history: createWebHistory(),
@@ -44,7 +48,8 @@ describe('YourComponent Tests', () => {
                 NavBar.setup({attrs: { $router: router}})
             },
             provide: {
-                $fetch: async () => ({json: async() => ({current: {temp_c: 28, condition: {icon: 'cloudy'}}})})
+                $fetch: async () => ({json: async() => ({current: {temp_c: 28, condition: {icon: 'cloudy'}}})}),
+                useAuth0: mockedUseAuth0
             }
         }
 
@@ -71,5 +76,5 @@ describe('YourComponent Tests', () => {
 
         // Assert that the weather data is loaded correctly
         expect(wrapper.vm.weatherData).toEqual(mockedWeatherData);
-    }) */
+    })
 })

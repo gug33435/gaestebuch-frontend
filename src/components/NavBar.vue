@@ -15,7 +15,6 @@ let imageURL = ref("")
 onMounted(async () => {
   await router.isReady()
   console.log(route.path)
-  console.log(isAuthenticated)
   if (route.path === "/rest1" || route.path === "/rest2" || route.path === "/rest3") {
     const num = parseInt(route.path.replace("/rest", ""))
     console.log(num)
