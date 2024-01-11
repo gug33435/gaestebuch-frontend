@@ -1,7 +1,9 @@
 <script setup>
-import {onMounted, ref} from "vue";
-import { useRoute } from 'vue-router';
-import router from "@/router";
+import {onMounted, ref} from "vue"
+import { useRoute } from 'vue-router'
+import router from "@/router"
+import LogoutButton from "@/buttons/logoutButton.vue";
+import LoginButton from "@/buttons/loginButton.vue";
 const route = useRoute() || { path: '/rest1' }
 
 let restLocation = ""
@@ -13,6 +15,7 @@ let imageURL = ref("")
 onMounted(async () => {
   await router.isReady()
   console.log(route.path)
+  console.log(isAuthenticated)
   if (route.path === "/rest1" || route.path === "/rest2" || route.path === "/rest3") {
     const num = parseInt(route.path.replace("/rest", ""))
     console.log(num)
@@ -82,8 +85,8 @@ function setRestLocation(number, retransfer) {
       <a class="navbar-text">{{restText}}</a>
       <a class="navbar-text">{{weatherDegree}}</a>
       <img v-bind:src="imageURL">
-      <button v-if="authState && authState.isAuthenticated" class="btn btn-outline-danger my-2 my-sm-0" type="submit" @click="logout">Logout</button>
-      <button v-else class="btn btn-outline-success my-2 my-sm-0" type="submit" @click="login">Login</button>
+      <logout-button></logout-button>
+      <login-button></login-button>
     </div>
   </nav>
 </template>

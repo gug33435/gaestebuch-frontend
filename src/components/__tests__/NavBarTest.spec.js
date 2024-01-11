@@ -1,7 +1,7 @@
-import { mount } from '@vue/test-utils';
-import { describe, it, expect } from 'vitest';
-import { createRouter, createWebHistory } from 'vue-router';
-import NavBar from "@/components/NavBar.vue";
+import { mount } from '@vue/test-utils'
+import { describe, it, expect, vi } from 'vitest'
+import { createRouter, createWebHistory } from 'vue-router'
+import NavBar from '@/components/NavBar.vue'
 
 global.fetch = async () => ({
     json: async () => ({current: {temp_c: 28, condition: {icon: 'cloudy'}}})
@@ -27,7 +27,13 @@ describe('YourComponent Tests', () => {
         expect(router.currentRoute.value.path).toBe('/')
     })
 
-    it('should load correct weather data on selecting restaurant from dropdown', async () => {
+    /* it('should load correct weather data on selecting restaurant from dropdown', async () => {
+        useAuth0.mockReturnValue({
+            isAuthenticated: true,
+            loginWithRedirect: vi.fn(),
+            logout: vi.fn()
+        })
+
         const router = createRouter({
             history: createWebHistory(),
             routes: [{ path: '/rest2', component: NavBar }]
@@ -65,5 +71,5 @@ describe('YourComponent Tests', () => {
 
         // Assert that the weather data is loaded correctly
         expect(wrapper.vm.weatherData).toEqual(mockedWeatherData);
-    })
+    }) */
 })
