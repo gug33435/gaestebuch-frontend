@@ -5,7 +5,7 @@ import { authGuard } from "@auth0/auth0-vue";
 import editFormView from "@/views/editFormView.vue";
 
 const router = createRouter({
-  history: createWebHistory('https://gaestebuch-frontend.onrender.com'),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',

@@ -20,7 +20,7 @@ watch(
 function logOutOfApp() {
   logout({
     logoutParams: {
-      returnTo: 'https://gaestebuch-frontend.onrender.com' + ziel
+      returnTo: ziel
     }
   })
 }
