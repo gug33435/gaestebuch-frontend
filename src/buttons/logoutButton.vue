@@ -17,7 +17,11 @@ watch(
 )
 
 function logOutOfApp() {
-  logout()
+  logout({
+    logoutParams: {
+      returnTo: "https://gaestebuch-frontend.onrender.com/"
+    }
+  })
 }
 </script>
 
