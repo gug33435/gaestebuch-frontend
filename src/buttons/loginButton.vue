@@ -19,7 +19,7 @@ watch(
 function login() {
   loginWithRedirect({
     appState: {
-      target: '/'
+      target: 'https://gaestebuch-frontend.onrender.com/rest1'
     }
   })
 }
