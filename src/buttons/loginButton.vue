@@ -3,7 +3,7 @@ import {useAuth0} from "@auth0/auth0-vue";
 const { loginWithRedirect, isAuthenticated } = useAuth0() || {}
 import { useRoute } from 'vue-router';
 import {watch} from "vue";
-const route = useRoute()
+const route = useRoute() || { path: '/rest1' }
 let ziel = "/"
 
 watch(
