@@ -20,7 +20,7 @@ watch(
 function logOutOfApp() {
   logout({
     logoutParams: {
-      returnTo: '/'
+      returnTo: ziel
     }
   })
 }

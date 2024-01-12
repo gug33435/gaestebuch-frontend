@@ -21,7 +21,7 @@ app.use(
         domain: 'dev-epbohyrlxewyz745.eu.auth0.com',
         clientId: 'KGL5LzfMMojMeuOA1DhKcHgeMdPMZV6p',
         authorizationParams: {
-            redirect_uri: 'http://localhost:5173/'
+            redirect_uri: 'https://gaestebuch-frontend.onrender.com'
         }
     })
 )
