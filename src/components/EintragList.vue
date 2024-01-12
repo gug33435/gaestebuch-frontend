@@ -8,7 +8,6 @@ const { user, isAuthenticated} = useAuth0()
 let test = ref({})
 let emailVal = ""
 checkEmail()
-console.log(import.meta.env.BASE_URL)
 
 function checkEmail() {
   if (isAuthenticated.value) {
@@ -19,6 +18,7 @@ function checkEmail() {
 watch(
     () => route.path,
     async newId => {
+      console.log("URL:" + import.meta.env.BASE_URL)
       checkEmail()
       loadUpdate()
     },
