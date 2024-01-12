@@ -2,12 +2,23 @@
 import {useRoute} from 'vue-router';
 import {onMounted, ref, watch} from "vue";
 import router from "@/router";
-const route = useRoute()
+import {useAuth0} from "@auth0/auth0-vue";
+const route = useRoute() || { path: '/rest1'}
+const { user, isAuthenticated} = useAuth0()
 let test = ref({})
+let emailVal = ""
+checkEmail()
+
+function checkEmail() {
+  if (isAuthenticated.value) {
+    emailVal = user.value.email
+  } else emailVal = ""
+}
 
 watch(
     () => route.path,
     async newId => {
+      checkEmail()
       loadUpdate()
     },
     {
@@ -25,7 +36,6 @@ function transfer2() {
 
 onMounted(() => {
   loadUpdate()
-  console.log("mounted")
 })
 
 function loadUpdate() {
@@ -45,7 +55,6 @@ function loadUpdate() {
         for (let valueKey in test.value) {
           test.value[valueKey].publishDate = (new Date(test.value[valueKey].publishDate)).toLocaleDateString()
         }
-        console.log("Update loaded")
       })
 }
 
@@ -139,8 +148,8 @@ async function pushtoBackend(id) {
       <p class="mb-1">{{item.text}}</p>
       <div class="d-flex w-100 justify-content-between">
         <small class="my-auto">{{item.publishDate}}</small>
-        <button class="btn btn-danger my-auto" @click="pushtoBackend(item.id)">Löschen</button>
-        <button class="btn btn-outline-light my-auto" @click="transfer(item.id)">Bearbeiten</button>
+        <button v-if="emailVal === item.email" class="btn btn-danger my-auto" @click="pushtoBackend(item.id)">Löschen</button>
+        <button v-if="emailVal === item.email" class="btn btn-outline-light my-auto" @click="transfer(item.id)">Bearbeiten</button>
       </div>
     </a>
   </div>

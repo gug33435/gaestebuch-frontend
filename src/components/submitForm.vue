@@ -2,8 +2,10 @@
 import moment from "moment";
 import router from "../router";
 import { useRoute } from 'vue-router';
+import {useAuth0} from "@auth0/auth0-vue";
+const { user } = useAuth0()
 let route = parseInt(useRoute().path.replace("/newEintrag/", ""))
-console.log(route)
+const email = user.value.email
 
 const pushToBackEnd = async(fields) => {
   await new Promise((r) => setTimeout(r, 1000))
@@ -14,7 +16,7 @@ const pushToBackEnd = async(fields) => {
     publishDate: moment(fields.date).utc().format('YYYY-MM-DD'),
     restID: route,
     name: fields.name,
-    email: fields.email
+    email: email
   }
   const requestOptions = {
     method: 'POST',
@@ -56,11 +58,6 @@ const pushToBackEnd = async(fields) => {
         label="Name"
         help="Your full name"
         placeholder="Max Mustermann"
-    />
-    <FormKit
-        type="email"
-        name="email"
-        label="Ihre private E-Mail-Adresse:"
     />
     <FormKit
         type="datepicker"
