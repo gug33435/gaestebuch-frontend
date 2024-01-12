@@ -18,7 +18,6 @@ function checkEmail() {
 watch(
     () => route.path,
     async newId => {
-      console.log("URL:" + import.meta.env.BASE_URL)
       checkEmail()
       loadUpdate()
     },
@@ -62,7 +61,6 @@ function loadUpdate() {
 async function pushtoBackend(id) {
   await fetch("https://gaestebuch-backend.onrender.com/eintrag/delete/" + id, { method: 'DELETE'})
       .then (response => {
-        console.log(response)
         loadUpdate()
       })
 }

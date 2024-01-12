@@ -10,7 +10,6 @@ watch(
     () => route.path,
     async newId => {
       ziel = route.path
-      console.log(ziel)
     },
     {
       immediate: true

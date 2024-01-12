@@ -10,7 +10,6 @@ watch(
     () => route.path,
     async newId => {
       ziel = route.path
-      console.log(ziel)
     },
     {
       immediate: true
@@ -18,11 +17,7 @@ watch(
 )
 
 function logOutOfApp() {
-  logout({
-    logoutParams: {
-      returnTo: ziel
-    }
-  })
+  logout()
 }
 </script>
 

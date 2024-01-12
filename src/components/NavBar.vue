@@ -13,18 +13,14 @@ let weatherDegree = ref("")
 let imageURL = ref("")
 
 onMounted(async () => {
-  console.log("MOUNTED!!!!")
   await router.isReady()
-  console.log(route.path)
   if (route.path === "/rest1" || route.path === "/rest2" || route.path === "/rest3") {
     const num = parseInt(route.path.replace("/rest", ""))
-    console.log(num)
     setRestLocation(num, false)
   }
 })
 
 function loadWeather() {
-  console.log("API Entered")
   const endpoint = "https://api.weatherapi.com/v1/current.json?key=97d241e2972a4bc684a05407240601&q=" + restLocation + "&aqi=no"
   const requestOptions = {
     method: 'GET'
@@ -32,7 +28,6 @@ function loadWeather() {
   fetch(endpoint, requestOptions)
       .then(response => response.json())
       .then (result => {
-        console.log(result)
         weatherData.value = result
         weatherDegree.value = result.current["temp_c"] + "° Celsius"
         imageURL.value = result.current.condition.icon
@@ -40,21 +35,17 @@ function loadWeather() {
 }
 
 function setRestLocation(number, retransfer) {
-  console.log("entered")
   if (number === 1) {
     restLocation = "Berlin"
     restText = "Braserie Gendarmenmarkt, " + restLocation
-    console.log(restLocation)
     if (retransfer) router.push('/rest1')
   } else if (number === 2) {
       restLocation = "Frankfurt"
       restText = "Imbiss Hoppner, " + restLocation
-      console.log(restLocation)
-      if (retransfer) this.router.push('/rest2')
+      if (retransfer) router.push('/rest2')
     } else if (number === 3) {
       restLocation = "Reykjavík"
       restText = "Hotel Atlantis, " + restLocation
-      console.log(restLocation)
       if (retransfer) router.push('/rest3')
     }
     loadWeather()
