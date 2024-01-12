@@ -25,7 +25,7 @@ onMounted(async () => {
 
 function loadWeather() {
   console.log("API Entered")
-  const endpoint = "http://api.weatherapi.com/v1/current.json?key=97d241e2972a4bc684a05407240601&q=" + restLocation + "&aqi=no"
+  const endpoint = "https://api.weatherapi.com/v1/current.json?key=97d241e2972a4bc684a05407240601&q=" + restLocation + "&aqi=no"
   const requestOptions = {
     method: 'GET'
   }
