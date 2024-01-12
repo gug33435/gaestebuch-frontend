@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from "vue"
+import {onMounted, ref, watch} from "vue"
 import { useRoute } from 'vue-router'
 import router from "@/router"
 import LogoutButton from "@/buttons/logoutButton.vue";
@@ -11,6 +11,20 @@ let restText = ""
 let weatherData = ref({})
 let weatherDegree = ref("")
 let imageURL = ref("")
+
+watch(
+    () => route.path,
+    async newId => {
+      console.log("DIE NEUE ROUTE:" + route.path)
+      if (route.path === "/rest1" || route.path === "/rest2" || route.path === "/rest3") {
+        const num = parseInt(route.path.replace("/rest", ""))
+        setRestLocation(num, false)
+      }
+    },
+    {
+      immediate: true
+    }
+)
 
 onMounted(async () => {
   await router.isReady()
